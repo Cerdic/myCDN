@@ -1,0 +1,23 @@
+Ce CDN est tire de http://code.google.com/p/cirruxcache/
+Il fonctionne par mise en cache automatique des ressources statiques
+
+Toutes les ressources de type js|css|png|gif|jpg|jpeg|swf sont cachees
+Les autres ressources sont redirigees
+
+Sur le site d'origine, on reference la ressource statique avec l'url :
+http://monapp.appspot.com/mondomaine.org/monfichierstatique.css
+
+Le CDN se charge alors de recuperer http://mondomaine.org/monfichierstatique.css si il ne l'a pas encore dans son container
+Les ressources sont stockees avec une duree de vie d'un mois.
+
+Il est conseille d'utiliser des urls avec un timestamp ou un numero de version dans l'URL :
+http://monapp.appspot.com/mondomaine.org/monfichierstatique.ts12345.css
+
+Par securite, les domaines acceptes en entree sont explicites dans app.py :
+
+La premiere regle prend en charge les ressources statiques :
+		'/(static[.]yterium[.]net/.*(?:js|css|png|gif|jpg|jpeg|swf))', 'yStaticAll',
+La seconde redirige les autres ressources, sur le site d'origine :
+		'/(static[.]yterium[.]net/.*)', 'yRedirectAll',
+
+Pour ajouter d'autres domaines, il suffit de dupliquer ces deux regles en modifiant le nom du domaine.
