@@ -1,0 +1,29 @@
+this CDN is based on CirruxCache : http://code.google.com/p/cirruxcache/
+Its working by automatically caching static resources
+
+all the resources of types js|css|png|gif|jpg|jpeg|swf are cached
+Other resources are redirected 
+
+On the original website, the static resourcewill be referenced with something like :
+http://myapp.appspot.com/mydomain.tld/mystaticfile.css
+( can also be your own domain name if you make a CNAME to ghs.google.com.
+
+The CDN, using MyCDN, will get http://yourdomain.tld/yourfile.css if its not yet in the CDN and serve the file
+
+Resources are stored with a lifetime of 1 month
+
+Its recomended using URLs with a timestamp or a version number :
+http://myapp.appspot.com/mydomain.tld/mystaticfile.ts12345.css
+
+for security reasons, the domains accepted for requests are explicitly specified in app.py :
+
+the first rule is for static resources :
+		'/(static[.]yterium[.]net/.*(?:js|css|png|gif|jpg|jpeg|swf))', 'yStaticAll',
+
+the second one will redirect other resources to the original website :
+		'/(static[.]yterium[.]net/.*)', 'yRedirectAll',
+
+You can add more domains by duplicating those 2 rules, modifying the domain name.
+
+You can also add other extensions by modifying the extensions list ( (?:js|css|png|gif|jpg|jpeg|swf) )
+
